@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小遊戲 - 貪吃蛇</title>
+    <style>
+        body{
+            background-color: rgb(24, 31, 39);
+            color: springgreen;
+        }
+        .h1_gameTitle{
+            color: springgreen;
+            font-size: 40px;
+        }
+        .button{
+            width: 110px;height: 50px;
+            border-radius: 0px;
+            font-size: 20px;
+            background-color: silver;
+            border-radius: 20px;
+        }
+        #score_id{
+            color: springgreen;
+            font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 45px;
+            margin-top: -20px;
+            margin-bottom: 5px;
+        }
+        #text_introduce{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <h1 class="h1_gameTitle">=== 小遊戲 - 貪吃蛇 ===</h1>
+    <button id="button" class="button" onclick="gameStart()"><b>開始</b></button>
+    <h2>你的分數</h2>
+    <u><h2 id="score_id">0</h2></u>
+    <canvas width="400" height="400" id="canvas_id"></canvas>
+    <div id="text_introduce"></div>
+    </center>
+</body>
+
+<script>
+    var BLOCK_COUNT = 20
+    var BLOCK_SIZE = 20
+    var gameInterval
+    var snake
+    var apple1
+    var apple2
+    var score
+    function gameStart() {        
+        snake = {
+            body: [{ x: BLOCK_COUNT / 2, y: BLOCK_COUNT / 2 }], //方塊的位置 {x:10, y:10}
+            size: 6, //方塊最大數目 (蛇的長度)
+            direction: { x: 0, y: -1} //下個方塊移動方
+        }
+        putApple1()
+        putApple2()
+        updateScore(0) //更新分數顯示 (每 gameStart()，重設分數為 0)
+        gameInterval = setInterval(gameRun, 150) //每 150毫秒執行一次 gameRun()
+        document.getElementById("text_introduce").innerHTML="* 按鍵盤 ↑ ↓ ← → 或 WASD 來控制你的小蛇 *"
+        document.getElementById("button").innerHTML = "<b>重新開始</b>"
+    }
+    //遊戲運行機制
+    function gameRun() {
+        moveSnake()//蛇的移動機制
+        updateCanvas()//畫布更新機制
+        //死亡機制
+        if(snakeDead()) {
+            stopRun()
+            return
+        }
+        //吃到 Apple
+        if (snake.body[0].x === apple1.x && //判斷舌頭是否吃到蘋果
+            snake.body[0].y === apple1.y) {
+                snake.size += 2
+                putApple1()
+                updateScore(score + 2)
+        }
+        if (snake.body[0].x === apple2.x && //判斷舌頭是否吃到蘋果
+            snake.body[0].y === apple2.y) {
+                snake.size += 2
+                putApple2()
+                updateScore(score + 2)
+        }
+    }
+    //蛇的移動機制
+    function moveSnake() {
+        var newBlock = {
+            x: snake.body[0].x + snake.direction.x,
+            y: snake.body[0].y + snake.direction.y
+        }
+        snake.body.unshift(newBlock) /*unshift()在陣列的開頭插入一個值*/
+        while (snake.body.length > snake.size) {
+            snake.body.pop() /*pop()移除最後一個陣列值*/
+        }
+    }
+    //畫布 : 更新機制
+    function updateCanvas() {
+        var canvas = document.getElementById('canvas_id')
+        var context = canvas.getContext('2d')
+        //背景
+        context.fillStyle = 'black'
+        context.fillRect(0, 0, canvas.width, canvas.height)
+        //蛇的樣子
+        context.fillStyle = 'lightskyblue'
+        for (var i=0; i<snake.body.length; i++) {
+            context.fillRect(
+                snake.body[i].x * BLOCK_SIZE +3 ,
+                snake.body[i].y * BLOCK_SIZE +3 ,
+                BLOCK_SIZE -3 ,BLOCK_SIZE -3 )                
+        }
+        // Apple 的樣子
+        context.fillStyle = 'red'
+        context.fillRect(
+            apple1.x * BLOCK_SIZE +3 ,
+            apple1.y * BLOCK_SIZE +3 ,
+            BLOCK_SIZE -3 ,BLOCK_SIZE -3 )
+            context.fillStyle = 'red'
+        context.fillRect(
+            apple2.x * BLOCK_SIZE +3 ,
+            apple2.y * BLOCK_SIZE +3 ,
+            BLOCK_SIZE -3 ,BLOCK_SIZE -3 )
+    }
+    //死亡機制
+    function snakeDead() {
+        //撞到牆
+        if (snake.body[0].x < 0)                   { alert("你撞到牆壁了"); return true }
+        else if (snake.body[0].x > BLOCK_COUNT -1) { alert("你撞到牆壁了"); return true }
+        else if (snake.body[0].y < 0)              { alert("你撞到牆壁了"); return true }
+        else if (snake.body[0].y > BLOCK_COUNT -1) { alert("你撞到牆壁了"); return true }
+        //撞到身體
+        for (var i=1; i<snake.body.length; i++) {
+            if (snake.body[0].x == snake.body[i].x && 
+                snake.body[0].y == snake.body[i].y) 
+            {
+                alert("你撞到自己的身體了")
+                return true
+            }
+        }
+    }
+    //停止 Interval
+    function stopRun() {
+        clearInterval(gameInterval)
+        alert("點 '重新開始' 在玩一次吧")
+    }
+    //放蘋果
+    function putApple1(){
+        apple1 = {
+            x: Math.floor(Math.random() * BLOCK_COUNT),
+            y: Math.floor(Math.random() * BLOCK_COUNT)
+        }
+        for (var i=0; i<snake.body.length; i++) { //防止生成在蛇的身體裡
+            if (snake.body[i].x === apple1.x &&
+                snake.body[i].y === apple1.y) {
+                putApple1()
+                break }
+        }
+    }
+    function putApple2(){
+        apple2 = {
+            x: Math.floor(Math.random() * BLOCK_COUNT),
+            y: Math.floor(Math.random() * BLOCK_COUNT)
+        }
+        for (var i=0; i<snake.body.length; i++) { //防止生成在蛇的身體裡
+            if (snake.body[i].x === apple2.x &&
+                snake.body[i].y === apple2.y) {
+                putApple2()
+                break }
+        }
+    }
+
+    //分數更新
+    function updateScore(newScore) {
+        score = newScore
+        document.getElementById("score_id").innerHTML = score
+    }
+    //鍵盤控制
+    window.onload = onPageLoad
+    function onPageLoad() {
+        document.addEventListener('keydown', function(k) { //取得鍵盤狀態
+            var keycode = k.keyCode;
+            switch (keycode) {
+                //鍵盤 ↑ ↓ ← →
+                case 40: moveDown(); break;
+                case 38: moveUp(); break;
+                case 37: moveLeft(); break;
+                case 39: moveRight(); break;
+                //鍵盤 W A S D
+                case 83: moveDown(); break;
+                case 87: moveUp(); break;
+                case 65: moveLeft(); break;
+                case 68: moveRight(); break; }
+        })
+    };
+    function moveLeft() {
+        snake.direction.x = -1
+        snake.direction.y = 0
+    }
+    function moveRight() {
+        snake.direction.x = 1
+        snake.direction.y = 0        
+    }
+    function moveUp() {
+        snake.direction.x = 0
+        snake.direction.y = -1
+    }
+    function moveDown() {
+        snake.direction.x = 0
+        snake.direction.y = 1
+    }
+</script>
+</html>

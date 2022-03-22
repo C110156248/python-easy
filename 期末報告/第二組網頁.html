@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous">
+        function a(){window.open("HW08_貪吃蛇.html")}
+    </script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    <title>經典街機遊戲 - 貪吃蛇</title>
+<style>
+    html{scroll-behavior: smooth;}
+    body{background-color: rgb(243, 243, 243);}
+    a{text-decoration:none;}
+    a:visited{color: black;}
+    .Box_top_left{
+        margin-top: -10px;margin-left: -10px;
+        width: 660px;height: 110px;
+        background-color: rgb(255, 255, 255);
+        z-index: 10;position: relative;display: inline-block;
+        position: fixed;top: 0;left: 0;}
+    .Box_top_right{
+        margin-top: -10px;margin-left: -10px;
+        width: 870px;height: 110px;
+        background-color: rgb(255, 255, 255);
+        z-index: 9;position: relative;display: inline-block;
+        position: fixed;top: 0;right: 0;}
+    .BG_left{
+        background-color: rgb(223, 204, 179);
+        width: 650px;height: 760px;
+        margin-top: -10px;margin-left: -10px;
+        z-index: 1;position: relative;    }
+    .Box_0{
+        width: 400px;height: 500px;
+        background: rgb(255, 250, 243);
+        z-index: 2;position: relative;
+        top:-580px;left: 350px;
+        box-shadow: rgba(0, 0, 0, 0.219) 0px 0px 70px ;    }    
+    .Avatar_1{
+        z-index: 4;position: relative;
+        top: 50px;left: 100px;
+        border-radius: 100%;    }
+    .Name_big{        
+        font-size: 30px;width: 150px;
+        font-family: "Trebuchet MS";margin-left: 20px;display: inline-block;    }
+    #hello_big{
+        z-index: 4;position: relative;
+        top: 70px;left: 55px;font-size: 40px;    }
+    .Box_0_line{
+        width: 80px;height: 2px;
+        background-color: #0050FF;
+        z-index: 4;position: relative;
+        top: 110px;left: 160px;    }
+    .title_job{        
+        font-size: 16px;display: inline-block;
+        margin-left: 50px;
+        font-family: "Microsoft JhengHei UI Light";    }
+    #hello_small{
+        z-index: 4;position: relative;
+        top: 140px;left: 80px;    }    
+    .Box_0_botton{
+        width: 400px;height: 60px;
+        background: rgb(255, 255, 255);
+        z-index: 3;position: relative;top:170px;
+        box-shadow: rgba(0, 0, 0, 0.164) 0px 0px 60px ;    }
+    .social-icon{
+        color: rgb(49, 49, 49); background-color: #c7bfb8;
+        display: inline-flex; margin-right: 1rem;
+        align-items: center; justify-content: center;        
+        height: 2.3rem; width: 2.3rem;
+        border-radius: 100%; font-size: 1.2rem;            }
+    .social-icon:hover{transform: scale(1.2);transition-duration: 0.5s;}
+    .social_box{margin-left: 120px;padding-top: 11px;}
+    .Box_hello{
+        z-index: 1;position: relative;
+        width: 600px;height: 500px;
+        left: 780px;top: -1050px;    }
+    .Hello_big{
+        font-size: 90px;
+        font-family: "Nirmala UI";    }
+    .Hello_middle{
+        font-size: 25px;
+        font-family: "Microsoft JhengHei UI Light";
+        margin-top: 15px;}
+    .Hello_small{
+        font-size: 20px;font-family: 微軟正黑體;
+        margin-top: 30px;width: 500px;    }
+    .BG_resume{
+        background-color: #E6DACE;
+        margin-top: -1020px;margin-left: -10px;
+        width: 1521px;height: 500px;    }
+    .Button_1{
+        border: #0050FF 2px solid;border-radius: 20px;
+        width: 110px;margin-top: 25px;background-color: #0050FF;
+        padding: 6px;opacity: 1;margin-right: 20px;
+        text-align: center;display: inline-block;transition-duration: 0.5s;        }
+    .Button_1:hover{
+        background-color: rgb(255, 255, 255);
+        opacity: 0.8;border: #0050FF 2px solid;}    
+    .Button_link_text{
+        font-size: 18px;font-family: 微軟正黑體;
+        color: rgb(255, 255, 255);transition-duration: 0.5s;    }
+    .Button_link_text:hover{
+        color: rgb(0, 0, 0);    }
+    .top_link-box{
+        width: 600px;height: 50px;
+        margin-top: 35px;margin-left: 250px;line-height: 55px;text-align: right;
+        font-size: 18px;color: black;    }
+    .top_link-box:hover {color: rgb(56, 56, 216);}
+    #text_about{color: rgb(56, 56, 216);}
+    #top_text_link:hover{color: rgb(56, 56, 216);}
+    #top_text_link:link{color: black;}
+    .gemaing{
+        z-index: 1;position: relative;
+        top: -900px;width: 500px;
+    }
+
+</style>
+</head>
+<body>
+<div class="Box_top_left">
+    <br><br><div class="Name_big"><a href="#about"><b>貪 吃 蛇</b></a></div>
+    <div class="title_job">/&nbsp;&nbsp; Greedy&nbsp;&nbsp;Snake</div>    
+</div>
+<div class="Box_top_right">
+    <div class="top_link-box">
+        <a href="#about" id="text_about">回到頂部&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href="Hw08_貪吃蛇.html" id="top_text_link">開始遊戲&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href="https://zh.wikipedia.org/wiki/%E8%B4%AA%E9%A3%9F%E8%9B%87" id="top_text_link">維基百科&nbsp;&nbsp;&nbsp;&nbsp;</a>        
+    </div>
+</div>
+<section id="about">
+    <div class="BG_left"></div>
+    <div class="Box_0">
+        <img class="Avatar_1" src="https://lh3.googleusercontent.com/proxy/8a9NJKgqYdB8xHSRUFVTJYOTW7cwCv9STFeKB-2upVKSknqlXPy5bXUKa9qyOcOxXeb0bUaXyOG7RC5GfBbCke1Ou05cS4uHI5e_WdY_zFhla0BHvlN2F3fkRWk" alt="" width="200">
+        <br>
+        <div class="Name_big" id="hello_big"><b>Greedy&nbsp;Snake</b></div>
+        <div class="Box_0_line"></div>
+        <div class="title_job" id="hello_small">E A S Y &nbsp; & &nbsp; F U N</div>
+        <div class="Box_0_botton">
+            <div class="social_box">
+                <a class="social-icon" href="https://www.youtube.com/channel/UCAIMUc0AsM3m20MSLiiPW0A" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a class="social-icon" href="https://www.instagram.com/wang.how/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a class="social-icon" href="https://www.facebook.com/wanghow0219" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="Box_hello">
+        <span class="Hello_big"><b>Welcome</b></span><br>
+        <div class="Hello_middle"><b> Blockade · Greedy Snake</b></div>
+        <div class="Button_1"><a class="Button_link_text" href="Hw08_貪吃蛇.html"><b>進入遊戲</b></a></div>
+        <div class="Button_1"><a class="Button_link_text" href="https://zh.wikipedia.org/wiki/%E8%B4%AA%E9%A3%9F%E8%9B%87"><b>維基百科</b></a></div>
+        <div class="Hello_small">&nbsp;&nbsp;&nbsp;&nbsp;貪食蛇是一個起源於1976年的大型電玩遊戲 Blockade。此類遊戲在1990年代由於一些具有小型螢幕的行動電話的引入而再度流行起來，在現在的手機上基本都可安裝此小遊戲。版本亦有所不同。 在遊戲中，玩家操控一條細長的直線，它會不停前進，玩家只能操控蛇的頭部朝向，一路拾起觸碰到之物，並要避免觸碰到自身或者其他障礙物。
+        </div>
+        
+    </div>
+</section>
+<center>
+    <img src="gemaing.png" class="gemaing" alt="">
+</center>
+</body>
+</html>
