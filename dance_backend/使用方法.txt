@@ -1,0 +1,31 @@
+<model_name>
+-competitions
+-teachinfos
+-users
+-videos
+
+查詢:
+
+
+-全部 "/query/<model_name>"
+
+-單一 "/query/<model_name>/<int:item_id>"  #<int:item_id> == primary_key
+
+
+新增:
+
+-指令 "/add/<model_name>"
+
+
+
+更新:
+
+-指令 "/update/<model_name>/<int:item_id>"  #<int:item_id> == primary_key
+
+
+
+刪除:
+
+-指令 "/delete/<model_name>/<int:item_id>"   #<int:item_id> == primary_key
+
+

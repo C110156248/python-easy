@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask App</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/competitions')
+                .then(response => response.json())
+                .then(data => {
+                    const competitionsList = document.getElementById('competitions-list');
+                    data.forEach(comp => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `ID: ${comp.cId}, Name: ${comp.cName}, Time: ${comp.cTime}, Type: ${comp.cType}, Place: ${comp.Place}`;
+                        competitionsList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
+</head>
+<body>
+    <h1>Welcome to Flask App</h1>
+    <p>This is a simple HTML page to test Flask routing.</p>
+    <h2>Competitions</h2>
+    <ul id="competitions-list"></ul>
+</body>
+</html>

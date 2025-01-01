@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Data</title>
+</head>
+<body>
+    <h1>Add Data</h1>
+    <form id="addForm">
+        <label for="modelName">Model Name:</label>
+        <input type="text" id="modelName" name="modelName" required>
+        <br>
+        <label for="data">Data (JSON format):</label>
+        <textarea id="data" name="data" required></textarea>
+        <br>
+        <button type="submit">Add</button>
+    </form>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('addForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const modelName = document.getElementById('modelName').value;
+            const data = document.getElementById('data').value;
+            try {
+                const response = await fetch(`/add/${modelName}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: data
+                });
+                const result = await response.json();
+                document.getElementById('response').innerText = JSON.stringify(result, null, 2);
+            } catch (error) {
+                document.getElementById('response').innerText = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
